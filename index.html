@@ -262,6 +262,12 @@
   textarea { min-height: 110px; resize: vertical; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .fine { font-size: 13px; color: var(--muted); }
+  .fine.err { color: var(--red); font-weight: 600; }
+  form { position: relative; }
+  .sent { background: var(--hl); border: 2px solid var(--ink); border-radius: 14px; padding: 18px; }
+  .sent b { display: block; font-weight: 900; font-size: 20px; text-transform: uppercase; margin-bottom: 6px; }
+  .sent p { font-size: 15px; }
+  .sent a { font-weight: 800; text-decoration: underline; }
   .reach { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
   .reach a { display: block; border: 2px solid var(--ink); border-radius: 16px; padding: 18px; background: var(--card); box-shadow: 5px 6px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
   .reach a:hover { transform: translate(-1px,-2px); box-shadow: 7px 8px 0 var(--ink); }
@@ -657,8 +663,13 @@
       </label>
       <label>Your website / product / video link<input name="link" placeholder="https://" required></label>
       <label>The story (idea, script, deadline, a video you love)<textarea name="notes"></textarea></label>
-      <button class="btn btn-primary" type="submit">Send it →</button>
-      <p class="fine">Opens your email app with everything filled in. No payment now.</p>
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <button class="btn btn-primary" type="submit" id="sendBtn">Send it →</button>
+      <p class="fine" id="formNote">Goes straight to my inbox. I reply within a few hours. No payment now.</p>
+      <div class="sent" id="sentMsg" hidden>
+        <b>Got it — thank you!</b>
+        <p>Your brief is in my inbox. I'll reply to <span id="sentEmail"></span> within a few hours. Want to talk sooner? <a data-call href="#" target="_blank" rel="noopener">Book a 15-min call →</a></p>
+      </div>
     </form>
   </div>
 </section>
@@ -687,6 +698,7 @@
     email: "sonalinayak0804@gmail.com",  // where orders go
     x: "https://x.com/yourhandle",     // your X profile
     call: "https://cal.com/sonali-nayak-2s8cf9/15min",  // booking link
+    formKey: "c0eb6d5b-bc2d-4fc1-8393-96a98f87e543",   // Web3Forms access key (web3forms.com → enter your email → key arrives by mail)
   };
   // ──────────────────────────────────────────────────────────────────────────
 
@@ -747,12 +759,34 @@
     document.getElementById("planSelect").value = b.dataset.plan;
   }));
 
-  // Order form → prefilled email (no backend needed)
-  document.getElementById("orderForm").addEventListener("submit", e => {
+  // Order form → emailed straight to CONFIG.email via Web3Forms (no backend, no email app needed).
+  const form = document.getElementById("orderForm"), sendBtn = document.getElementById("sendBtn"), note = document.getElementById("formNote");
+  form.addEventListener("submit", async e => {
     e.preventDefault();
-    const f = new FormData(e.target);
-    const body = `Name: ${f.get("name")}\nEmail: ${f.get("email")}\nPlan: ${f.get("plan")}\nLink: ${f.get("link")}\n\n${f.get("notes") || ""}`;
-    location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("Video order: " + f.get("plan"))}&body=${encodeURIComponent(body)}`;
+    const f = new FormData(form);
+    if (f.get("_honey")) return;                      // bot trap
+    sendBtn.disabled = true; sendBtn.textContent = "Sending…"; note.classList.remove("err");
+    const data = {
+      access_key: CONFIG.formKey,
+      subject: `New video order: ${f.get("plan")} — ${f.get("name")}`,
+      from_name: "Hookframe site",
+      name: f.get("name"), email: f.get("email"), plan: f.get("plan"), link: f.get("link"), story: f.get("notes") || "",
+    };
+    try {
+      if (!CONFIG.formKey) throw new Error("no form key");
+      const body = new FormData();
+      Object.entries(data).forEach(([k, v]) => body.append(k, v));
+      const r = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { Accept: "application/json" }, body });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.success) throw new Error(j.message || r.status);
+      [...form.children].forEach(c => { if (c.id !== "sentMsg") c.hidden = true; });
+      document.getElementById("sentEmail").textContent = f.get("email");
+      document.getElementById("sentMsg").hidden = false;
+    } catch (err) {
+      sendBtn.disabled = false; sendBtn.textContent = "Send it →";
+      note.classList.add("err");
+      note.innerHTML = `Couldn't send just now. Email me directly at <a href="mailto:${CONFIG.email}">${CONFIG.email}</a>.`;
+    }
   });
 </script>
 </body>
