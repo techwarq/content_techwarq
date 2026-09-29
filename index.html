@@ -191,13 +191,20 @@
   .night { background: var(--night); color: var(--paper); background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 36px 36px; }
   .night .chapter span { background: var(--hl); color: var(--ink); }
   .night .sub { color: #a8a39a; }
-  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 50px; counter-reset: panel; }
+  .board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 50px; }
   .panel { background: var(--night-2); border: 2px solid #2d2d33; border-radius: var(--r); padding: 22px; position: relative; }
   .panel .sketch { aspect-ratio: 4/3; border: 2px dashed #3a3a42; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px; overflow: hidden; }
   .panel .sketch svg { width: 70%; height: 70%; }
-  .panel .no { font: 700 12px/1 "JetBrains Mono", monospace; color: var(--hl); letter-spacing: .1em; }
-  .panel h3 { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin: 8px 0 8px; }
+  .panel .no { font: 700 12px/1 "JetBrains Mono", monospace; color: var(--hl); letter-spacing: .1em; text-transform: uppercase; }
+  .panel h3 { font-size: 21px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin: 8px 0 8px; }
   .panel p { color: #a8a39a; font-size: 15px; }
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 28px; border: 2px solid #2d2d33; border-radius: 16px; overflow: hidden; }
+  .timeline div { padding: 16px 18px; border-right: 2px solid #2d2d33; }
+  .timeline div:last-child { border-right: 0; }
+  .timeline .mono { display: block; font-size: 12px; color: var(--hl); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+  .timeline b { font-weight: 800; font-size: 16px; }
+  .timeline .hot { background: var(--hl); color: var(--ink); }
+  .timeline .hot .mono { color: var(--ink); }
   .panel:not(:last-child)::after { content: "→"; position: absolute; right: -16px; top: 38%; font-weight: 900; color: var(--hl); font-size: 22px; z-index: 2; }
 
   /* pricing */
@@ -219,7 +226,22 @@
   .plan li::before { content: ""; flex: 0 0 16px; height: 16px; margin-top: 3px; border-radius: 4px; background: var(--hl); border: 1.5px solid var(--ink); }
   .plan .btn { margin-top: auto; justify-content: center; width: 100%; }
   .plan.best .btn-primary { border-color: var(--hl); box-shadow: 4px 5px 0 var(--hl); }
-  .note { color: var(--muted); font-size: 15px; margin-top: 26px; }
+  .note { color: var(--ink-2); font-size: 16px; margin-top: 26px; }
+  .plans { grid-template-columns: repeat(3, 1fr); }
+  .plan .headline { font-weight: 900; font-size: 18px; letter-spacing: -0.01em; margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: var(--paper-2); border: 1.5px solid var(--ink); }
+  .plan.best .headline { background: var(--hl); color: var(--ink); border-color: var(--hl); }
+  .plan.best { transform: translateY(-10px); }
+  .compare { margin-top: 34px; padding: 0; overflow: hidden; }
+  .compare summary { padding: 18px 20px; }
+  .compare .tw { overflow-x: auto; border-top: 2px solid var(--ink); }
+  .compare table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+  .compare th, .compare td { padding: 12px 16px; border-bottom: 1px solid var(--line); text-align: center; }
+  .compare tbody th { text-align: left; font-weight: 600; }
+  .compare thead th { font-weight: 900; text-transform: uppercase; font-size: 14px; }
+  .compare thead small { font: 600 12px/1.4 "JetBrains Mono", monospace; text-transform: none; color: var(--muted); }
+  .compare .hot, .compare td:last-child { background: color-mix(in srgb, var(--hl) 28%, transparent); }
+  .compare td.y { font-weight: 900; }
+  .compare td.n { color: var(--dim); }
 
   /* faq */
   .faq { margin-top: 40px; display: grid; gap: 12px; max-width: 840px; }
@@ -240,6 +262,15 @@
   textarea { min-height: 110px; resize: vertical; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .fine { font-size: 13px; color: var(--muted); }
+  .reach { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+  .reach a { display: block; border: 2px solid var(--ink); border-radius: 16px; padding: 18px; background: var(--card); box-shadow: 5px 6px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
+  .reach a:hover { transform: translate(-1px,-2px); box-shadow: 7px 8px 0 var(--ink); }
+  .reach a.call { background: var(--hl); }
+  .reach .ic { width: 38px; height: 38px; border-radius: 10px; background: var(--ink); display: grid; place-items: center; margin-bottom: 12px; }
+  .reach .ic svg { width: 20px; height: 20px; stroke: var(--hl); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .reach b { display: block; font-weight: 900; font-size: 18px; text-transform: uppercase; letter-spacing: -0.01em; }
+  .reach small { display: block; font: 600 12.5px/1.4 "JetBrains Mono", monospace; color: var(--ink-2); margin-top: 4px; }
+  .reach small[data-email-text] { overflow-wrap: anywhere; }
   .contact-alt { margin-top: 24px; font-size: 16px; }
   .contact-alt a { background: var(--hl); padding: 0 4px; font-weight: 700; }
 
@@ -260,16 +291,22 @@
     .hero-top { gap: 26px; }
     .case .stage { position: relative; top: 0; }
     .board { grid-template-columns: 1fr 1fr; }
-    .panel:nth-child(2)::after { display: none; }
+    .panel::after { display: none; }
+    .timeline { grid-template-columns: 1fr 1fr; }
+    .timeline div:nth-child(2) { border-right: 0; }
+    .timeline div:nth-child(-n+2) { border-bottom: 2px solid #2d2d33; }
     .sticker.now { left: -10px; } .sticker.note { right: -10px; }
     .films-rest { grid-template-columns: 1fr 1fr; }
+    .plans { grid-template-columns: 1fr; max-width: 520px; }
+    .plan.best { transform: none; }
   }
   @media (max-width: 640px) {
     .navlinks a:not(.btn) { display: none; }
     section { padding: 80px 0; }
     .hero { padding-top: 44px; }
-    .two, .craft { grid-template-columns: 1fr; }
+    .two, .craft, .reach { grid-template-columns: 1fr; }
     .board { grid-template-columns: 1fr; }
+    .panel .sketch { aspect-ratio: 16/7; }
     .panel::after { display: none; }
     .grid.vertical { grid-template-columns: repeat(2, 1fr); gap: 26px 14px; }
     .grid.wide, .films-top, .films-rest { grid-template-columns: 1fr; }
@@ -297,8 +334,8 @@
       <a href="#story">Case study</a>
       <a href="#films">Films</a>
       <a href="#reels">Reels</a>
-      <a href="#process">Process</a>
       <a href="#pricing">Pricing</a>
+      <a data-call href="#" target="_blank" rel="noopener">Book a call</a>
       <a href="#order" class="btn btn-primary">Hire me</a>
     </div>
   </div>
@@ -315,11 +352,11 @@
         <p class="lede">Founders don't have time to make content. I do. <b>I'm not a big studio — I'm a creator who uses AI</b> to script, voice, find footage and edit, then I direct every video myself. You get launch films and reels every week, at a price that actually makes sense.</p>
         <div class="cta-row">
         <a href="#order" class="btn btn-primary">Tell me your story →</a>
-        <a href="#story" class="btn btn-ghost">See how I build one</a>
+        <a data-call href="#" target="_blank" rel="noopener" class="btn btn-ghost">Book a 15-min call</a>
       </div>
         <div class="facts">
         <div>from <b>$29</b></div>
-        <div><b>12+</b> videos / month</div>
+        <div><b>60</b> reels / month</div>
         <div><b>48h</b> delivery</div>
         <div><b>9:16 + 16:9</b></div>
       </div>
@@ -372,7 +409,7 @@
         <li><small>Price</small><s>$$$$</s></li>
       </ul></div>
       <div><h4>Me + AI</h4><ul>
-        <li><small>Output</small>12+ videos / month</li>
+        <li><small>Output</small>60 reels + 8 launch videos / month</li>
         <li><small>Turnaround</small>48 hours each</li>
         <li><small>Process</small>Send a link. That's it.</li>
         <li><small>Price</small>From $29</li>
@@ -488,110 +525,102 @@
   </div>
 </section>
 
-<section id="process" class="night">
-  <div class="wrap">
-    <p class="chapter"><span>Ch. 04</span>The process</p>
-    <h2>How a story <span class="serif">gets made.</span></h2>
-    <p class="sub">You send a link, a script or a rough idea. I storyboard it like a short film — then build every frame.</p>
-    <div class="board">
-      <div class="panel">
-        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round"><rect x="14" y="14" width="56" height="40" rx="6"/><rect x="36" y="30" width="56" height="40" rx="6" fill="#17171A"/><path d="M84 18l14-6M88 30h14M84 42l14 6"/></svg></div>
-        <span class="no">01 · HOOK</span><h3>Find the line</h3><p>The one sentence that makes a stranger stop. I dig it out of your product, your story or your long video.</p>
-      </div>
-      <div class="panel">
-        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 70L44 22 62 58 84 16 100 48"/><circle cx="100" cy="48" r="6" fill="#FFD60A"/></svg></div>
-        <span class="no">02 · TENSION</span><h3>Build the problem</h3><p>Show what's broken before the fix. Real footage, framed and cut to the voice.</p>
-      </div>
-      <div class="panel">
-        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3"><rect x="10" y="26" width="100" height="38" rx="6"/><text x="60" y="52" text-anchor="middle" fill="#FFD60A" stroke="none" font-family="Inter, sans-serif" font-weight="900" font-size="18">ONE THING.</text></svg></div>
-        <span class="no">03 · TURN</span><h3>Land the turn</h3><p>The moment it clicks — huge type, a hand-drawn graphic, a cut that hits on the word.</p>
-      </div>
-      <div class="panel">
-        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="36" width="92" height="20" rx="5"/><rect x="18" y="40" width="40" height="12" rx="3" fill="#FFD60A" stroke="none"/><path d="M44 72l8 8 18-18"/></svg></div>
-        <span class="no">04 · PAYOFF</span><h3>Deliver in 48h</h3><p>Captions, music and sound design. Vertical + wide exports, ready to post. One free revision.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section id="pricing">
   <div class="wrap">
-    <p class="chapter"><span>Ch. 05</span>Pricing</p>
-    <h2>Simple prices. <span class="serif">No calls needed.</span></h2>
-    <div class="banner">★ Founding-client pricing for the first 10 orders, then prices go up.</div>
+    <p class="chapter"><span>Ch. 04</span>Pricing</p>
+    <h2>$149 a month. <span class="serif">2 videos every day.</span></h2>
+    <p class="sub">Your content handled for the whole month — or start small and try us for $29.</p>
 
     <div class="plans">
       <div class="plan">
-        <h3>Clip pack</h3>
-        <p class="for">Turn one long video into short clips.</p>
-        <div class="price"><b>$29</b><s>$59</s></div>
+        <h3>Content test</h3>
+        <p class="for">Try us.</p>
+        <div class="price"><b>$29</b><em>one-time</em></div>
+        <p class="headline">10 reels + 3 launch videos</p>
         <ul>
-          <li>10 vertical clips from your podcast, demo or talk</li>
-          <li>Best moments picked for you</li>
-          <li>Animated captions + hook titles</li>
-          <li>48h delivery</li>
+          <li>Scripts + hooks</li>
+          <li>Captions</li>
+          <li>AI voiceover</li>
+          <li>Brand style</li>
+          <li>1 revision</li>
+          <li>48–72h turnaround</li>
         </ul>
-        <a href="#order" class="btn btn-ghost" data-plan="Clip pack — $29">Order clips</a>
-      </div>
-
-      <div class="plan">
-        <h3>Story reels</h3>
-        <p class="for">Faceless reels for your brand or your founder story.</p>
-        <div class="price"><b>$39</b><em>for 3</em><s>$89</s></div>
-        <ul>
-          <li>3 reels, 30–60s each</li>
-          <li>Script written for you (or bring yours)</li>
-          <li>Real footage, AI voiceover or your voice</li>
-          <li>Captions, music, sound design</li>
-        </ul>
-        <a href="#order" class="btn btn-ghost" data-plan="Story reels — $39">Order reels</a>
-      </div>
-
-      <div class="plan best">
-        <span class="tag">Most popular</span>
-        <h3>Launch film</h3>
-        <p class="for">A product launch told as a story.</p>
-        <div class="price"><b>$79</b><s>$199</s></div>
-        <ul>
-          <li>30–45s motion-graphics film</li>
-          <li>Your real brand: fonts, colours, UI</li>
-          <li>Music + SFX, voiceover optional</li>
-          <li>16:9 and 9:16 exports</li>
-          <li>1 free revision</li>
-        </ul>
-        <a href="#order" class="btn btn-primary" data-plan="Launch film — $79">Order a launch film</a>
+        <a href="#order" class="btn btn-ghost" data-plan="Content test — $29">Try for $29</a>
       </div>
 
       <div class="plan">
         <h3>Growth</h3>
-        <p class="for">A story every few days, done for you.</p>
-        <div class="price"><b>$149</b><em>/month</em><s>$299</s></div>
+        <p class="for">Launch your content.</p>
+        <div class="price"><b>$79</b><em>one-time</em></div>
+        <p class="headline">20 reels + 5 launch videos</p>
         <ul>
-          <li>12 story reels a month</li>
-          <li>20 clips from your long videos</li>
-          <li>Posting-ready captions for each</li>
+          <li>Content calendar</li>
+          <li>Scripts + hooks</li>
+          <li>Captions</li>
+          <li>AI voiceover</li>
+          <li>Brand style</li>
+          <li>2 revisions</li>
+          <li>48h turnaround</li>
+        </ul>
+        <a href="#order" class="btn btn-ghost" data-plan="Growth — $79">Get Growth</a>
+      </div>
+
+      <div class="plan best">
+        <span class="tag">Most popular</span>
+        <h3>Full month</h3>
+        <p class="for">Your content team, without hiring one.</p>
+        <div class="price"><b>$149</b><em>/ month</em></div>
+        <p class="headline">60 reels + 8 launch/demo videos</p>
+        <ul>
+          <li>2 posts every day</li>
+          <li>Content calendar planned for you</li>
+          <li>Scripts + hooks</li>
+          <li>Captions + hashtags</li>
+          <li>AI voiceovers</li>
+          <li>Brand-matched editing</li>
+          <li>Launch / demo / feature videos</li>
+          <li>Posting-ready files</li>
           <li>Priority 24–48h turnaround</li>
           <li>Cancel anytime</li>
         </ul>
-        <a href="#order" class="btn btn-ghost" data-plan="Growth — $149/month">Start Growth</a>
+        <a href="#order" class="btn btn-primary" data-plan="Full month — $149/month">Start Full Month</a>
       </div>
     </div>
-    <p class="note">Not sure which? Order a <b>$29 clip pack</b> or <b>$39 reels</b> first. If you don't love it, you don't pay.</p>
+
+    <details class="compare">
+      <summary>Compare plans</summary>
+      <div class="tw"><table>
+        <thead><tr><th></th><th>Content test<br><small>$29 one-time</small></th><th>Growth<br><small>$79 one-time</small></th><th class="hot">Full month<br><small>$149 / month</small></th></tr></thead>
+        <tbody>
+          <tr><th>Reels</th><td>10</td><td>20</td><td><b>60</b></td></tr>
+          <tr><th>Launch / demo / feature videos</th><td>3</td><td>5</td><td><b>8</b></td></tr>
+          <tr><th>Posting</th><td class="n">—</td><td class="n">—</td><td><b>2× every day</b></td></tr>
+          <tr><th>Content calendar</th><td class="n">—</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th>Scripts + hooks</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th>Captions</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th>AI voiceover</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th>Brand style</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><th>Revisions</th><td>1</td><td>2</td><td>2</td></tr>
+          <tr><th>Turnaround</th><td>48–72h</td><td>48h</td><td>24–48h</td></tr>
+        </tbody>
+      </table></div>
+    </details>
+    <p class="note">Not sure? <b>Try 10 reels + 3 launch videos for $29.</b> If you don't love it, you don't pay.</p>
   </div>
 </section>
 
 <section id="faq" style="padding-top: 20px;">
   <div class="wrap">
-    <p class="chapter"><span>Ch. 06</span>Questions</p>
+    <p class="chapter"><span>Ch. 05</span>Questions</p>
     <h2>Before you <span class="serif">ask.</span></h2>
     <div class="faq">
-      <details><summary>How fast is delivery?</summary><p>48 hours from when I have your link or files. Growth clients get priority.</p></details>
+      <details><summary>How fast is delivery?</summary><p>24–72 hours depending on the plan, from when we have your brief and assets. Full month clients get priority 24–48h turnaround.</p></details>
       <details><summary>Are you a professional studio?</summary><p>No, and that's the point. I'm a solo creator who learned to direct AI tools well. No agency overhead means founders get lots of good content at a price that fits an early-stage budget.</p></details>
       <details><summary>What do you need from me?</summary><p>Just your website or product link. For clips, a link to the long video. For reels, a topic or script (or I write it). I ask a few quick questions if anything's unclear.</p></details>
       <details><summary>Do you use AI? Is it "AI slop"?</summary><p>Yes, I use AI, openly. It writes first drafts, voices, finds footage and speeds up the edit. That's why it's fast and cheap. But I'm the one telling the story: I pick every clip, fix the pacing and cut anything that looks off before you see it. If it feels like slop, you don't pay.</p></details>
       <details><summary>Can I use my own voice or footage?</summary><p>Yes. Send a voice note or clips and I'll cut to them word by word. Otherwise I use a natural AI voice and licensed-style footage.</p></details>
       <details><summary>What if I don't like it?</summary><p>You get one free revision on every video. If it's still not right on your first order, you don't pay.</p></details>
-      <details><summary>How do I pay?</summary><p>Pay after you've seen your first draft. For Growth, monthly by card or UPI/PayPal.</p></details>
+      <details><summary>How do I pay?</summary><p>Pay after you've seen your first draft. For Full month, monthly by card or UPI/PayPal — cancel anytime.</p></details>
     </div>
   </div>
 </section>
@@ -599,10 +628,19 @@
 <section id="order" style="padding-top: 40px;">
   <div class="wrap order">
     <div>
-      <p class="chapter"><span>Ch. 07</span>Hire me</p>
+      <p class="chapter"><span>Ch. 06</span>Hire me</p>
       <h2>Your story, <span class="serif">in 48 hours.</span></h2>
       <p class="sub">Tell me what you're building or what happened. I'll reply within a few hours with questions (if any) and a delivery time. <b>You pay after you see the draft.</b></p>
-      <p class="contact-alt">Prefer DM? Message me on <a data-x href="#">X</a> or email <a data-email href="#">me</a>.</p>
+      <div class="reach">
+        <a class="call" data-call href="#" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+          <b>Book a call</b><small>15 min · talk through your story</small>
+        </a>
+        <a data-mail href="#">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <b>Email me</b><small data-email-text>sonalinayak0804@gmail.com</small>
+        </a>
+      </div>
     </div>
     <form id="orderForm">
       <div class="two">
@@ -611,10 +649,9 @@
       </div>
       <label>What do you want?
         <select name="plan" id="planSelect">
-          <option>Launch film — $79</option>
-          <option>Story reels — $39</option>
-          <option>Clip pack — $29</option>
-          <option>Growth — $149/month</option>
+          <option>Full month — $149/month</option>
+          <option>Growth — $79</option>
+          <option>Content test — $29</option>
           <option>Not sure yet</option>
         </select>
       </label>
@@ -647,14 +684,18 @@
   // ── Edit these before publishing ──────────────────────────────────────────
   const CONFIG = {
     brand: "Hookframe",
-    email: "hello@example.com",        // where orders go
+    email: "sonalinayak0804@gmail.com",  // where orders go
     x: "https://x.com/yourhandle",     // your X profile
+    call: "https://cal.com/sonali-nayak-2s8cf9/15min",  // booking link
   };
   // ──────────────────────────────────────────────────────────────────────────
 
   document.querySelectorAll("[data-brand]").forEach(e => e.textContent = CONFIG.brand);
   document.querySelectorAll("[data-email]").forEach(e => { e.href = "mailto:" + CONFIG.email; e.textContent = CONFIG.email; });
   document.querySelectorAll("[data-x]").forEach(e => e.href = CONFIG.x);
+  document.querySelectorAll("[data-call]").forEach(e => e.href = CONFIG.call);
+  document.querySelectorAll("[data-mail]").forEach(e => e.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Video for my startup"));
+  document.querySelectorAll("[data-email-text]").forEach(e => e.textContent = CONFIG.email);
   document.getElementById("yr").textContent = new Date().getFullYear();
 
   // Autoplay muted previews only while on screen (saves data on phones).
