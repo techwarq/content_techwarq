@@ -268,7 +268,7 @@
   .sent b { display: block; font-weight: 900; font-size: 20px; text-transform: uppercase; margin-bottom: 6px; }
   .sent p { font-size: 15px; }
   .sent a { font-weight: 800; text-decoration: underline; }
-  .reach { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+  .reach { display: grid; grid-template-columns: minmax(0, 360px); gap: 14px; margin-top: 28px; }
   .reach a { display: block; border: 2px solid var(--ink); border-radius: 16px; padding: 18px; background: var(--card); box-shadow: 5px 6px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
   .reach a:hover { transform: translate(-1px,-2px); box-shadow: 7px 8px 0 var(--ink); }
   .reach a.call { background: var(--hl); }
@@ -641,10 +641,6 @@
         <a class="call" data-call href="#" target="_blank" rel="noopener">
           <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
           <b>Book a call</b><small>15 min · talk through your story</small>
-        </a>
-        <a data-mail href="#">
-          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 7l9 6 9-6"/></svg></span>
-          <b>Email me</b><small data-email-text>sonalinayak0804@gmail.com</small>
         </a>
       </div>
     </div>
