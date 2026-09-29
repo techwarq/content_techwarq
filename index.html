@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hookframe — AI-made videos for founders who don't have time</title>
+<meta name="description" content="Launch films and story reels for busy founders. Made with AI, directed by me. Lots of content, from $29, delivered in 48 hours.">
+<meta property="og:title" content="Hookframe — story-first content">
+<meta property="og:description" content="Story reels, launch films and documentary edits. From $29, delivered in 48 hours.">
+<meta property="og:image" content="media/reel-48-hours.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ECE8DF; --paper-2: #F5F2EA; --card: #FBF9F4; --line: #D3CDBF; --grid: rgba(17,17,17,.055);
+    --ink: #111111; --ink-2: #2A2926; --muted: #6E685E; --dim: #9A948A;
+    --hl: #FFD60A; --red: #EB4034; --night: #0E0E10; --night-2: #17171A;
+    --r: 18px; --max: 1200px;
+    --shadow: 8px 10px 0 var(--ink);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font: 400 16px/1.55 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, video { display: block; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+  .serif { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-style: italic; letter-spacing: -0.01em; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  .hl { background: linear-gradient(transparent 12%, var(--hl) 12%, var(--hl) 88%, transparent 88%); padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid var(--ink); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 900; letter-spacing: -0.03em; font-size: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
+  .logo b { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); display: inline-block; position: relative; }
+  .logo b::after { content: ""; position: absolute; inset: 7px 6px 7px 10px; background: var(--hl); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+  .navlinks { display: flex; gap: 26px; align-items: center; font-size: 14px; font-weight: 600; }
+  .navlinks a:not(.btn) { position: relative; }
+  .navlinks a:not(.btn):hover { background: var(--hl); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; padding: 13px 20px; font-weight: 800; font-size: 15px; cursor: pointer; border: 2px solid var(--ink); font-family: inherit; transition: transform .12s, box-shadow .12s; }
+  .btn-primary { background: var(--hl); color: var(--ink); box-shadow: 4px 5px 0 var(--ink); }
+  .btn-primary:hover { transform: translate(-1px,-1px); box-shadow: 6px 7px 0 var(--ink); }
+  .btn-primary:active { transform: translate(3px,4px); box-shadow: 1px 1px 0 var(--ink); }
+  .btn-ghost { background: var(--card); color: var(--ink); }
+  .btn-ghost:hover { background: #fff; }
+  nav .btn { padding: 9px 16px; font-size: 14px; box-shadow: 3px 4px 0 var(--ink); }
+
+  /* chapter labels */
+  .chapter { display: inline-flex; align-items: center; gap: 12px; font: 700 12.5px/1 "JetBrains Mono", monospace; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 18px; }
+  .chapter span { background: var(--ink); color: var(--hl); padding: 6px 9px; border-radius: 6px; }
+  h2 { font-size: clamp(38px, 5.4vw, 72px); line-height: .98; letter-spacing: -0.04em; font-weight: 900; max-width: 16ch; }
+  h2 .serif { font-weight: 400; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); margin-top: 16px; max-width: 580px; font-size: 18px; }
+  section { padding: 110px 0; position: relative; }
+
+  /* hero */
+  .hero { padding: 70px 0 90px; }
+  .kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; border: 2px solid var(--ink); background: var(--card); padding: 8px 12px; border-radius: 999px; }
+  .kicker i { width: 9px; height: 9px; border-radius: 50%; background: var(--red); animation: blink 1.2s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: .15; } }
+  h1 { font-size: clamp(48px, 7.4vw, 108px); line-height: .9; letter-spacing: -0.05em; font-weight: 900; margin: 26px 0 0; text-transform: uppercase; }
+  h1 .serif { text-transform: none; font-size: 1.1em; letter-spacing: -0.03em; display: inline-block; }
+  .lede { font-size: clamp(18px, 2vw, 21px); color: var(--ink-2); max-width: 560px; }
+  .lede b { font-weight: 700; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+  .facts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 34px; }
+  .facts div { font: 600 13px/1 "JetBrains Mono", monospace; border: 1.5px solid var(--line); background: var(--paper-2); padding: 9px 11px; border-radius: 8px; color: var(--muted); }
+  .facts b { color: var(--ink); }
+
+  .stage { position: relative; justify-self: center; width: min(360px, 100%); }
+  .phone { position: relative; aspect-ratio: 9/16; border-radius: 34px; overflow: hidden; background: #000; border: 3px solid var(--ink); box-shadow: 12px 14px 0 var(--ink); cursor: pointer; }
+  .phone video { width: 100%; height: 100%; object-fit: cover; }
+  .bracket { position: absolute; width: 44px; height: 44px; border: 0 solid var(--ink); }
+  .bracket.tl { top: -22px; left: -22px; border-top-width: 5px; border-left-width: 5px; }
+  .bracket.tr { top: -22px; right: -22px; border-top-width: 5px; border-right-width: 5px; }
+  .bracket.bl { bottom: -22px; left: -22px; border-bottom-width: 5px; border-left-width: 5px; }
+  .bracket.br { bottom: -22px; right: -22px; border-bottom-width: 5px; border-right-width: 5px; }
+  .sticker { position: absolute; z-index: 2; font: 800 13px/1 Inter, sans-serif; text-transform: uppercase; letter-spacing: .02em; padding: 9px 12px; border: 2px solid var(--ink); border-radius: 10px; box-shadow: 3px 4px 0 var(--ink); }
+  .sticker.now { top: 22px; left: -46px; background: var(--hl); transform: rotate(-5deg); }
+  .sticker.note { bottom: 70px; right: -54px; background: var(--card); transform: rotate(4deg); font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; text-transform: none; font-size: 20px; letter-spacing: 0; }
+  .sound { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 2; font: 700 12px/1 "JetBrains Mono", monospace; background: rgba(0,0,0,.6); color: #fff; padding: 8px 12px; border-radius: 999px; backdrop-filter: blur(6px); white-space: nowrap; pointer-events: none; }
+
+  /* hero: headline row + showreel strip */
+  .hero-top { display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: end; }
+  .hero-side { padding-bottom: 14px; }
+  .hero-side .lede { font-size: 18px; }
+  .hero-side .facts { gap: 8px; margin-top: 26px; }
+  .hero-side .facts div { font-size: 12px; padding: 8px 9px; }
+  .strip { display: grid; grid-template-columns: 1.7778fr .5625fr .5625fr; gap: 22px; margin-top: 64px; align-items: start; position: relative; }
+  .shot { cursor: pointer; }
+  .shot .frame { position: relative; border: 3px solid var(--ink); border-radius: 18px; overflow: hidden; background: #000; box-shadow: 8px 10px 0 var(--ink); transition: transform .15s, box-shadow .15s; }
+  .shot:hover .frame { transform: translate(-2px,-3px); box-shadow: 11px 13px 0 var(--ink); }
+  .shot.w .frame video { aspect-ratio: 16/9; }
+  .shot.v .frame video { aspect-ratio: 9/16; }
+  .shot video { width: 100%; object-fit: cover; }
+  .shot .rec { position: absolute; top: 12px; left: 12px; display: inline-flex; align-items: center; gap: 7px; font: 700 11.5px/1 "JetBrains Mono", monospace; background: rgba(0,0,0,.62); color: #fff; padding: 7px 9px; border-radius: 6px; backdrop-filter: blur(6px); text-transform: uppercase; letter-spacing: .06em; }
+  .shot .rec i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: blink 1.2s steps(2) infinite; }
+  .shot .label { display: flex; align-items: baseline; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .shot .label span { font: 700 11.5px/1 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .08em; background: var(--hl); border: 1.5px solid var(--ink); padding: 5px 7px; border-radius: 6px; white-space: nowrap; }
+  .shot .label b { font-weight: 900; font-size: 17px; text-transform: uppercase; letter-spacing: -0.01em; }
+  .shot.v .label b { font-size: 15px; }
+  .strip-note { position: absolute; top: -40px; right: 0; font-family: "Instrument Serif", serif; font-style: italic; font-size: 22px; color: var(--ink-2); }
+
+  /* films chapter */
+  .films-top { display: grid; grid-template-columns: 1fr 1fr; gap: 34px 26px; margin-top: 46px; }
+  .films-top .work .frame { border-radius: 16px; }
+  .films-top .work .cap b { font-size: 24px; }
+  .films-top .work .cap .serif { font-size: 22px; }
+  .films-rest { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px 22px; margin-top: 40px; }
+  .films-rest .work video, .films-top .work video { aspect-ratio: 16/9; }
+
+  /* arc ribbon */
+  .ribbon { background: var(--ink); color: var(--paper); border-block: 2px solid var(--ink); overflow: hidden; padding: 18px 0; transform: rotate(-1.2deg); margin: 0 -20px; }
+  .ribbon .track { display: flex; gap: 38px; width: max-content; animation: slide 32s linear infinite; font-weight: 900; font-size: clamp(22px, 3vw, 34px); letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; }
+  .ribbon .track em { font-family: "Instrument Serif", serif; font-weight: 400; text-transform: none; color: var(--hl); font-size: 1.15em; }
+  .ribbon .track i { font-style: normal; color: var(--hl); }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* honest part */
+  .honest { padding: 90px 0 30px; }
+  .honest-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .honest h2 { max-width: 18ch; }
+  .truths { display: grid; gap: 14px; margin-top: 30px; }
+  .truth { display: grid; grid-template-columns: 54px 1fr; gap: 16px; align-items: start; }
+  .truth .n { font: 700 13px/1 "JetBrains Mono", monospace; background: var(--ink); color: var(--hl); border-radius: 8px; padding: 10px 0; text-align: center; }
+  .truth b { display: block; font-weight: 900; font-size: 19px; text-transform: uppercase; letter-spacing: -0.01em; }
+  .truth p { color: var(--ink-2); font-size: 15.5px; margin-top: 2px; }
+  .vs { display: grid; grid-template-columns: 1fr 1fr; border: 2.5px solid var(--ink); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); background: var(--card); }
+  .vs > div { padding: 24px 22px; }
+  .vs > div + div { background: var(--hl); border-left: 2.5px solid var(--ink); }
+  .vs h4 { font: 700 12px/1 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 18px; }
+  .vs ul { list-style: none; display: grid; gap: 14px; }
+  .vs li { font-weight: 800; font-size: 17px; line-height: 1.2; }
+  .vs li small { display: block; font: 600 11.5px/1.3 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
+  .vs > div + div li small { color: var(--ink-2); }
+  .vs .old li { color: var(--muted); }
+  .vs .old s { text-decoration-thickness: 2px; }
+
+  /* featured case study */
+  .case { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; margin-top: 52px; align-items: start; }
+  .case .stage { width: min(380px, 100%); position: sticky; top: 96px; }
+  .case-head { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .chip { font: 700 12px/1 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .06em; border: 1.5px solid var(--ink); border-radius: 999px; padding: 7px 10px; background: var(--card); }
+  .chip.y { background: var(--hl); }
+  .case h3 { font-size: clamp(34px, 4vw, 54px); font-weight: 900; letter-spacing: -0.04em; line-height: 1; text-transform: uppercase; }
+  .logline { font-family: "Instrument Serif", serif; font-style: italic; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.2; margin: 16px 0 26px; color: var(--ink-2); }
+  .beats { border: 2px solid var(--ink); border-radius: var(--r); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .beats-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 2px solid var(--ink); font: 700 12px/1 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .08em; background: var(--paper-2); }
+  .beat { display: grid; grid-template-columns: 64px 104px 1fr; gap: 14px; align-items: baseline; width: 100%; text-align: left; padding: 15px 18px; background: none; border: 0; border-bottom: 1.5px dashed var(--line); font: inherit; color: inherit; cursor: pointer; position: relative; }
+  .beat:last-child { border-bottom: 0; }
+  .beat:hover { background: color-mix(in srgb, var(--hl) 22%, transparent); }
+  .beat.on { background: var(--hl); }
+  .beat .t { font: 700 14px/1 "JetBrains Mono", monospace; }
+  .beat .act { font-weight: 900; text-transform: uppercase; font-size: 13px; letter-spacing: .04em; }
+  .beat .what b { display: block; font-weight: 700; font-size: 15.5px; }
+  .beat .what small { color: var(--muted); font-size: 14px; }
+  .beat.on .what small { color: var(--ink-2); }
+  .craft { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 26px; }
+  .craft div { border-top: 3px solid var(--ink); padding-top: 12px; }
+  .craft b { display: block; font-weight: 800; font-size: 15px; margin-bottom: 4px; }
+  .craft p { color: var(--muted); font-size: 14px; }
+
+  /* work */
+  .tabs { display: flex; gap: 10px; margin: 38px 0 30px; flex-wrap: wrap; }
+  .tab { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--ink); background: var(--card); font: 800 14px/1 Inter, sans-serif; cursor: pointer; }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--hl); }
+  .grid { display: grid; gap: 34px 22px; }
+  .grid.vertical { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+  .grid.wide { grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); }
+  .work { cursor: pointer; }
+  .work .frame { position: relative; border-radius: 20px; overflow: hidden; background: #000; border: 2.5px solid var(--ink); box-shadow: 6px 7px 0 var(--ink); transition: transform .15s, box-shadow .15s; }
+  .work:hover .frame { transform: translate(-2px,-3px) rotate(-.4deg); box-shadow: 9px 11px 0 var(--ink); }
+  .work video { width: 100%; object-fit: cover; }
+  .grid.vertical .work video { aspect-ratio: 9/16; }
+  .grid.wide .work video { aspect-ratio: 16/9; }
+  .work .idx { position: absolute; top: 12px; left: 12px; font: 700 12px/1 "JetBrains Mono", monospace; background: var(--hl); color: var(--ink); border: 1.5px solid var(--ink); padding: 5px 7px; border-radius: 6px; }
+  .work .dur { position: absolute; top: 12px; right: 12px; font: 700 12px/1 "JetBrains Mono", monospace; background: rgba(0,0,0,.6); color: #fff; padding: 6px 8px; border-radius: 6px; }
+  .work .cap { padding: 14px 4px 0; }
+  .work .cap b { display: block; font-weight: 900; font-size: 18px; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1.1; }
+  .work .cap .serif { display: block; font-size: 19px; color: var(--ink-2); margin-top: 4px; line-height: 1.2; }
+  .work .cap small { display: block; margin-top: 8px; font: 600 12px/1.4 "JetBrains Mono", monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  [hidden] { display: none !important; }
+
+  /* process as storyboard */
+  .night { background: var(--night); color: var(--paper); background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 36px 36px; }
+  .night .chapter span { background: var(--hl); color: var(--ink); }
+  .night .sub { color: #a8a39a; }
+  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 50px; counter-reset: panel; }
+  .panel { background: var(--night-2); border: 2px solid #2d2d33; border-radius: var(--r); padding: 22px; position: relative; }
+  .panel .sketch { aspect-ratio: 4/3; border: 2px dashed #3a3a42; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px; overflow: hidden; }
+  .panel .sketch svg { width: 70%; height: 70%; }
+  .panel .no { font: 700 12px/1 "JetBrains Mono", monospace; color: var(--hl); letter-spacing: .1em; }
+  .panel h3 { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin: 8px 0 8px; }
+  .panel p { color: #a8a39a; font-size: 15px; }
+  .panel:not(:last-child)::after { content: "→"; position: absolute; right: -16px; top: 38%; font-weight: 900; color: var(--hl); font-size: 22px; z-index: 2; }
+
+  /* pricing */
+  .banner { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; background: var(--hl); border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; font-size: 14px; font-weight: 700; box-shadow: 3px 4px 0 var(--ink); }
+  .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 44px; align-items: stretch; }
+  .plan { background: var(--card); border: 2px solid var(--ink); border-radius: 20px; padding: 26px 24px; display: flex; flex-direction: column; position: relative; box-shadow: 6px 7px 0 var(--ink); }
+  .plan.best { background: var(--ink); color: var(--paper); }
+  .plan .tag { position: absolute; top: -14px; left: 22px; background: var(--hl); color: var(--ink); border: 2px solid var(--ink); font: 800 12px/1 Inter, sans-serif; padding: 6px 10px; border-radius: 8px; text-transform: uppercase; }
+  .plan h3 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; }
+  .plan .for { font-family: "Instrument Serif", serif; font-style: italic; font-size: 19px; line-height: 1.2; margin-top: 6px; min-height: 46px; color: var(--ink-2); }
+  .plan.best .for { color: #cfcac0; }
+  .price { margin: 18px 0 4px; display: flex; align-items: baseline; gap: 10px; }
+  .price b { font-size: 50px; letter-spacing: -0.04em; font-weight: 900; }
+  .price s { color: var(--dim); font-size: 17px; }
+  .price em { font-style: normal; color: var(--muted); font-size: 15px; }
+  .plan.best .price em { color: #b7b2a8; }
+  .plan ul { list-style: none; margin: 18px 0 26px; display: grid; gap: 10px; font-size: 14.5px; }
+  .plan li { display: flex; gap: 10px; }
+  .plan li::before { content: ""; flex: 0 0 16px; height: 16px; margin-top: 3px; border-radius: 4px; background: var(--hl); border: 1.5px solid var(--ink); }
+  .plan .btn { margin-top: auto; justify-content: center; width: 100%; }
+  .plan.best .btn-primary { border-color: var(--hl); box-shadow: 4px 5px 0 var(--hl); }
+  .note { color: var(--muted); font-size: 15px; margin-top: 26px; }
+
+  /* faq */
+  .faq { margin-top: 40px; display: grid; gap: 12px; max-width: 840px; }
+  details { background: var(--card); border: 2px solid var(--ink); border-radius: 14px; padding: 18px 20px; }
+  details[open] { box-shadow: 5px 6px 0 var(--ink); }
+  summary { cursor: pointer; font-weight: 800; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-weight: 900; font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { color: var(--ink-2); margin-top: 10px; font-size: 15.5px; }
+
+  /* order */
+  .order { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: start; }
+  form { background: var(--card); border: 2px solid var(--ink); border-radius: 22px; padding: 28px; display: grid; gap: 16px; box-shadow: var(--shadow); }
+  label { font: 700 12px/1 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .06em; display: grid; gap: 8px; }
+  input, select, textarea { font: 400 16px/1.4 Inter, sans-serif; color: var(--ink); background: var(--paper-2); border: 2px solid var(--ink); border-radius: 10px; padding: 12px 14px; width: 100%; text-transform: none; letter-spacing: 0; }
+  input:focus, select:focus, textarea:focus { outline: 3px solid var(--hl); outline-offset: 1px; }
+  textarea { min-height: 110px; resize: vertical; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fine { font-size: 13px; color: var(--muted); }
+  .contact-alt { margin-top: 24px; font-size: 16px; }
+  .contact-alt a { background: var(--hl); padding: 0 4px; font-weight: 700; }
+
+  footer { background: var(--ink); color: var(--paper); padding: 70px 0 40px; }
+  footer .fin { font-family: "Instrument Serif", serif; font-style: italic; font-size: clamp(80px, 16vw, 200px); line-height: .85; letter-spacing: -0.03em; }
+  footer .fin span { color: var(--hl); }
+  footer .row { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 30px; color: #a8a39a; font-size: 14px; border-top: 1px solid #2d2d33; padding-top: 22px; }
+
+  /* modal */
+  .modal { position: fixed; inset: 0; background: rgba(10,10,10,.9); z-index: 50; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .modal.open { display: flex; }
+  .modal video { max-width: min(100%, 1100px); max-height: 88vh; border-radius: 16px; background: #000; border: 2px solid #333; }
+  .modal .x { position: absolute; top: 16px; right: 20px; font-size: 34px; color: #fff; background: none; border: 0; cursor: pointer; }
+
+  .sticky-cta { display: none; }
+  @media (max-width: 900px) {
+    .hero-top, .case, .order, .honest-grid { grid-template-columns: 1fr; }
+    .hero-top { gap: 26px; }
+    .case .stage { position: relative; top: 0; }
+    .board { grid-template-columns: 1fr 1fr; }
+    .panel:nth-child(2)::after { display: none; }
+    .sticker.now { left: -10px; } .sticker.note { right: -10px; }
+    .films-rest { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .navlinks a:not(.btn) { display: none; }
+    section { padding: 80px 0; }
+    .hero { padding-top: 44px; }
+    .two, .craft { grid-template-columns: 1fr; }
+    .board { grid-template-columns: 1fr; }
+    .panel::after { display: none; }
+    .grid.vertical { grid-template-columns: repeat(2, 1fr); gap: 26px 14px; }
+    .grid.wide, .films-top, .films-rest { grid-template-columns: 1fr; }
+    .strip { grid-template-columns: 1fr 1fr; gap: 26px 14px; margin-top: 44px; }
+    .shot.w { grid-column: 1 / -1; }
+    .strip-note { display: none; }
+    .shot .label b, .shot.v .label b { font-size: 14px; }
+    .work .cap b { font-size: 15px; } .work .cap .serif { font-size: 16px; }
+    .beat { grid-template-columns: 52px 1fr; } .beat .act { grid-column: 2; }
+    .beat .what { grid-column: 1 / -1; }
+    .bracket { display: none; }
+    .case .stage { width: min(300px, 86%); }
+    .kicker { font-size: 11px; }
+    .sticky-cta { display: flex; position: fixed; left: 16px; right: 16px; bottom: 14px; z-index: 30; justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ribbon .track, .kicker i { animation: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo"><b></b><span data-brand>Hookframe</span></a>
+    <div class="navlinks">
+      <a href="#story">Case study</a>
+      <a href="#films">Films</a>
+      <a href="#reels">Reels</a>
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#order" class="btn btn-primary">Hire me</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <span class="kicker"><i></i>AI-made content · for busy founders</span>
+        <h1>Stories people <span class="serif"><span class="hl">actually</span> finish.</span></h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede">Founders don't have time to make content. I do. <b>I'm not a big studio — I'm a creator who uses AI</b> to script, voice, find footage and edit, then I direct every video myself. You get launch films and reels every week, at a price that actually makes sense.</p>
+        <div class="cta-row">
+        <a href="#order" class="btn btn-primary">Tell me your story →</a>
+        <a href="#story" class="btn btn-ghost">See how I build one</a>
+      </div>
+        <div class="facts">
+        <div>from <b>$29</b></div>
+        <div><b>12+</b> videos / month</div>
+        <div><b>48h</b> delivery</div>
+        <div><b>9:16 + 16:9</b></div>
+      </div>
+      </div>
+    </div>
+
+    <div class="strip">
+      <span class="strip-note">films &amp; reels — one storyteller ↓</span>
+      <div class="shot w work" data-src="media/launch-truemile.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/launch-truemile.jpg" src="media/launch-truemile.mp4"></video><span class="rec"><i></i>Now playing</span></div>
+        <div class="label"><span>01 · Launch film</span><b>TrueMile</b></div>
+      </div>
+      <div class="shot v work" data-src="media/reel-48-hours.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/reel-48-hours.jpg" src="media/reel-48-hours.mp4"></video></div>
+        <div class="label"><span>02 · Story reel</span><b>48 Hours #01</b></div>
+      </div>
+      <div class="shot v work" data-src="media/reel-build-until-they-notice.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/reel-build-until-they-notice.jpg" src="media/reel-build-until-they-notice.mp4"></video></div>
+        <div class="label"><span>03 · Founder story</span><b>Build until they notice</b></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="ribbon" aria-hidden="true">
+  <div class="track">
+    <span>Hook</span><i>→</i><span>Tension</span><i>→</i><span>Turn</span><i>→</i><span>Payoff</span><em>every single time.</em>
+    <span>Hook</span><i>→</i><span>Tension</span><i>→</i><span>Turn</span><i>→</i><span>Payoff</span><em>every single time.</em>
+    <span>Hook</span><i>→</i><span>Tension</span><i>→</i><span>Turn</span><i>→</i><span>Payoff</span><em>every single time.</em>
+    <span>Hook</span><i>→</i><span>Tension</span><i>→</i><span>Turn</span><i>→</i><span>Payoff</span><em>every single time.</em>
+  </div>
+</div>
+
+<section class="honest" id="honest">
+  <div class="wrap honest-grid">
+    <div>
+      <p class="chapter"><span>The honest part</span>How it's this cheap</p>
+      <h2>One person. <span class="serif">A lot of AI.</span></h2>
+      <div class="truths">
+        <div class="truth"><span class="n">01</span><div><b>AI does the heavy lifting</b><p>Scripts, voiceovers, footage search, first cuts. Work that used to take days now takes hours.</p></div></div>
+        <div class="truth"><span class="n">02</span><div><b>I direct every video</b><p>The story, the pacing, which clip goes where. Nothing reaches you without me watching it first.</p></div></div>
+        <div class="truth"><span class="n">03</span><div><b>So you get more, for less</b><p>A steady stream of content from $29, instead of one expensive video a quarter. You keep building; I keep posting-ready videos coming.</p></div></div>
+      </div>
+    </div>
+    <div class="vs">
+      <div class="old"><h4>Traditional studio</h4><ul>
+        <li><small>Output</small><s>1 video</s></li>
+        <li><small>Turnaround</small><s>Weeks</s></li>
+        <li><small>Process</small><s>Calls, briefs, rounds</s></li>
+        <li><small>Price</small><s>$$$$</s></li>
+      </ul></div>
+      <div><h4>Me + AI</h4><ul>
+        <li><small>Output</small>12+ videos / month</li>
+        <li><small>Turnaround</small>48 hours each</li>
+        <li><small>Process</small>Send a link. That's it.</li>
+        <li><small>Price</small>From $29</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <div class="wrap">
+    <p class="chapter"><span>Ch. 01</span>Featured case study</p>
+    <h2>A 41-second story, <span class="serif">beat by beat.</span></h2>
+    <p class="sub">Tap any beat to jump the reel to that moment. This is how every video here gets built: a structure first, then every cut lands on a word.</p>
+
+    <div class="case">
+      <div class="stage">
+        <span class="bracket tl"></span><span class="bracket br"></span>
+        <div class="phone">
+          <video id="caseVideo" muted playsinline loop preload="metadata" poster="media/reel-48-hours.jpg" src="media/reel-48-hours.mp4"></video>
+          <span class="sound" id="caseSound">▶ tap a beat — plays with sound</span>
+        </div>
+      </div>
+      <div>
+        <div class="case-head">
+          <span class="chip y">Documentary edit</span><span class="chip">Series opener</span><span class="chip">41s · 9:16</span>
+        </div>
+        <h3>48 Hours — #01</h3>
+        <p class="logline">A creator who can't stop starting new things decides to pick one thing, and give it 48 hours.</p>
+
+        <div class="beats" role="list">
+          <div class="beats-head"><span>The structure</span><span>tap to play ▸</span></div>
+          <button class="beat" data-t="0"><span class="t">0:00</span><span class="act">Hook</span><span class="what"><b>"I can't focus on one thing."</b><small>App windows slam in and pile up. NEW IDEA. NEW PROJECT. NEW THING.</small></span></button>
+          <button class="beat" data-t="3.9"><span class="t">0:04</span><span class="act">Tension</span><span class="what"><b>Start, obsess, drop it.</b><small>Split panels, then tabs multiply while a cursor jumps between them: 1 → 2 → 3 → 4 → 5…</small></span></button>
+          <button class="beat" data-t="10.4"><span class="t">0:10</span><span class="act">Tension</span><span class="what"><b>"I move in every direction."</b><small>A dot ricochets across the screen, then freezes. Everything cuts to black.</small></span></button>
+          <button class="beat" data-t="14.5"><span class="t">0:14</span><span class="act">Turn</span><span class="what"><b>ONE THING. 48 HOURS.</b><small>Black screen, huge type. The series rule arrives in one line.</small></span></button>
+          <button class="beat" data-t="16.8"><span class="t">0:17</span><span class="act">Build</span><span class="what"><b>The clock starts.</b><small>48:00:00 card, then a framed montage with the countdown still running.</small></span></button>
+          <button class="beat" data-t="29.1"><span class="t">0:29</span><span class="act">Payoff</span><span class="what"><b>Progress, not mastery.</b><small>LEARN. BUILD. TRY. — then the bar ticks to 35% and gets CHECKED OFF.</small></span></button>
+          <button class="beat" data-t="33.9"><span class="t">0:34</span><span class="act">Callback</span><span class="what"><b>"One direction, 48 hours."</b><small>The runaway dot comes back — travelling one straight line, 0h → 48h.</small></span></button>
+        </div>
+
+        <div class="craft">
+          <div><b>Kinetic type</b><p>Words build on their exact syllable. Key words hit in yellow.</p></div>
+          <div><b>Hand-drawn motion</b><p>Every graphic drawn for this story, not a template pack.</p></div>
+          <div><b>Picked footage</b><p>Each clip chosen by eye, framed like a documentary.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="films" style="padding-top: 40px;">
+  <div class="wrap">
+    <p class="chapter"><span>Ch. 02</span>Launch films</p>
+    <h2>Products, told <span class="serif">like short films.</span></h2>
+    <p class="sub">Hand-built motion films: your real product UI, rebuilt and animated around a story. Tap to watch with sound.</p>
+    <div class="films-top">
+      <div class="work" data-src="media/launch-truemile.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/launch-truemile.jpg" src="media/launch-truemile.mp4"></video><span class="idx">01</span><span class="dur">0:32</span></div>
+        <div class="cap"><b>TrueMile</b><span class="serif">The product, told as a journey.</span><small>Launch film · recreated product UI</small></div>
+      </div>
+      <div class="work" data-src="media/launch-maritime.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/launch-maritime.jpg" src="media/launch-maritime.mp4"></video><span class="idx">02</span><span class="dur">0:33</span></div>
+        <div class="cap"><b>Maritime</b><span class="serif">An agent's story at sea.</span><small>Launch film · halftone motion</small></div>
+      </div>
+    </div>
+    <div class="films-rest">
+      <div class="work" data-src="media/launch-clep-motion-ui.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/launch-clep-motion-ui.jpg" src="media/launch-clep-motion-ui.mp4"></video><span class="idx">03</span><span class="dur">0:48</span></div>
+        <div class="cap"><b>Clep</b><span class="serif">From idea to product, in one take.</span><small>Product launch · motion-UI film · voiced</small></div>
+      </div>
+      <div class="work" data-src="media/launch-talo-anime.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/launch-talo-anime.jpg" src="media/launch-talo-anime.mp4"></video><span class="idx">04</span><span class="dur">0:30</span></div>
+        <div class="cap"><b>Talo</b><span class="serif">A launch drawn like a comic.</span><small>Anime launch · kinetic comic style</small></div>
+      </div>
+      <div class="work" data-src="media/launch-teaser.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/launch-teaser.jpg" src="media/launch-teaser.mp4"></video><span class="idx">05</span><span class="dur">0:10</span></div>
+        <div class="cap"><b>Prismo 2</b><span class="serif">Ten seconds, on the beat.</span><small>Teaser · kinetic type</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reels" style="padding-top: 40px;">
+  <div class="wrap">
+    <p class="chapter"><span>Ch. 03</span>Story reels</p>
+    <h2>Stories for the feed. <span class="serif">Tap to play with sound.</span></h2>
+    <div class="grid vertical" style="margin-top: 46px;">
+      <div class="work" data-src="media/reel-48-hours.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/reel-48-hours.jpg" src="media/reel-48-hours.mp4"></video><span class="idx">01</span><span class="dur">0:41</span></div>
+        <div class="cap"><b>48 Hours #01</b><span class="serif">One thing, 48 hours.</span><small>Documentary edit · series opener</small></div>
+      </div>
+      <div class="work" data-src="media/reel-build-until-they-notice.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/reel-build-until-they-notice.jpg" src="media/reel-build-until-they-notice.mp4"></video><span class="idx">02</span><span class="dur">1:02</span></div>
+        <div class="cap"><b>Build until they notice</b><span class="serif">A founder, heads down.</span><small>Founder story · voiceover + real footage</small></div>
+      </div>
+      <div class="work" data-src="media/reel-my-story.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/reel-my-story.jpg" src="media/reel-my-story.mp4"></video><span class="idx">03</span><span class="dur">0:54</span></div>
+        <div class="cap"><b>My story, 16 → 22</b><span class="serif">Six years in a minute.</span><small>Personal intro · aesthetic edit</small></div>
+      </div>
+      <div class="work" data-src="media/reel-antimattr-yc.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/reel-antimattr-yc.jpg" src="media/reel-antimattr-yc.mp4"></video><span class="idx">04</span><span class="dur">0:34</span></div>
+        <div class="cap"><b>A week at YC</b><span class="serif">Startup life, up close.</span><small>Lifestyle reel · movie scene + motion graphics · spec</small></div>
+      </div>
+      <div class="work" data-src="media/reel-exosat.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/reel-exosat.jpg" src="media/reel-exosat.mp4"></video><span class="idx">05</span><span class="dur">0:50</span></div>
+        <div class="cap"><b>Exosat</b><span class="serif">Your phone dies. The fix is overhead.</span><small>Explainer reel · stat cards · spec</small></div>
+      </div>
+      <div class="work" data-src="media/explainer-qwen-deepseek.mp4">
+        <div class="frame"><video data-auto muted playsinline loop preload="metadata" poster="media/explainer-qwen-deepseek.jpg" src="media/explainer-qwen-deepseek.mp4"></video><span class="idx">06</span><span class="dur">1:00</span></div>
+        <div class="cap"><b>Qwen vs DeepSeek</b><span class="serif">Two models, one question.</span><small>Tech explainer · motion UI</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="night">
+  <div class="wrap">
+    <p class="chapter"><span>Ch. 04</span>The process</p>
+    <h2>How a story <span class="serif">gets made.</span></h2>
+    <p class="sub">You send a link, a script or a rough idea. I storyboard it like a short film — then build every frame.</p>
+    <div class="board">
+      <div class="panel">
+        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round"><rect x="14" y="14" width="56" height="40" rx="6"/><rect x="36" y="30" width="56" height="40" rx="6" fill="#17171A"/><path d="M84 18l14-6M88 30h14M84 42l14 6"/></svg></div>
+        <span class="no">01 · HOOK</span><h3>Find the line</h3><p>The one sentence that makes a stranger stop. I dig it out of your product, your story or your long video.</p>
+      </div>
+      <div class="panel">
+        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 70L44 22 62 58 84 16 100 48"/><circle cx="100" cy="48" r="6" fill="#FFD60A"/></svg></div>
+        <span class="no">02 · TENSION</span><h3>Build the problem</h3><p>Show what's broken before the fix. Real footage, framed and cut to the voice.</p>
+      </div>
+      <div class="panel">
+        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3"><rect x="10" y="26" width="100" height="38" rx="6"/><text x="60" y="52" text-anchor="middle" fill="#FFD60A" stroke="none" font-family="Inter, sans-serif" font-weight="900" font-size="18">ONE THING.</text></svg></div>
+        <span class="no">03 · TURN</span><h3>Land the turn</h3><p>The moment it clicks — huge type, a hand-drawn graphic, a cut that hits on the word.</p>
+      </div>
+      <div class="panel">
+        <div class="sketch"><svg viewBox="0 0 120 90" fill="none" stroke="#FFD60A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="36" width="92" height="20" rx="5"/><rect x="18" y="40" width="40" height="12" rx="3" fill="#FFD60A" stroke="none"/><path d="M44 72l8 8 18-18"/></svg></div>
+        <span class="no">04 · PAYOFF</span><h3>Deliver in 48h</h3><p>Captions, music and sound design. Vertical + wide exports, ready to post. One free revision.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <p class="chapter"><span>Ch. 05</span>Pricing</p>
+    <h2>Simple prices. <span class="serif">No calls needed.</span></h2>
+    <div class="banner">★ Founding-client pricing for the first 10 orders, then prices go up.</div>
+
+    <div class="plans">
+      <div class="plan">
+        <h3>Clip pack</h3>
+        <p class="for">Turn one long video into short clips.</p>
+        <div class="price"><b>$29</b><s>$59</s></div>
+        <ul>
+          <li>10 vertical clips from your podcast, demo or talk</li>
+          <li>Best moments picked for you</li>
+          <li>Animated captions + hook titles</li>
+          <li>48h delivery</li>
+        </ul>
+        <a href="#order" class="btn btn-ghost" data-plan="Clip pack — $29">Order clips</a>
+      </div>
+
+      <div class="plan">
+        <h3>Story reels</h3>
+        <p class="for">Faceless reels for your brand or your founder story.</p>
+        <div class="price"><b>$39</b><em>for 3</em><s>$89</s></div>
+        <ul>
+          <li>3 reels, 30–60s each</li>
+          <li>Script written for you (or bring yours)</li>
+          <li>Real footage, AI voiceover or your voice</li>
+          <li>Captions, music, sound design</li>
+        </ul>
+        <a href="#order" class="btn btn-ghost" data-plan="Story reels — $39">Order reels</a>
+      </div>
+
+      <div class="plan best">
+        <span class="tag">Most popular</span>
+        <h3>Launch film</h3>
+        <p class="for">A product launch told as a story.</p>
+        <div class="price"><b>$79</b><s>$199</s></div>
+        <ul>
+          <li>30–45s motion-graphics film</li>
+          <li>Your real brand: fonts, colours, UI</li>
+          <li>Music + SFX, voiceover optional</li>
+          <li>16:9 and 9:16 exports</li>
+          <li>1 free revision</li>
+        </ul>
+        <a href="#order" class="btn btn-primary" data-plan="Launch film — $79">Order a launch film</a>
+      </div>
+
+      <div class="plan">
+        <h3>Growth</h3>
+        <p class="for">A story every few days, done for you.</p>
+        <div class="price"><b>$149</b><em>/month</em><s>$299</s></div>
+        <ul>
+          <li>12 story reels a month</li>
+          <li>20 clips from your long videos</li>
+          <li>Posting-ready captions for each</li>
+          <li>Priority 24–48h turnaround</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <a href="#order" class="btn btn-ghost" data-plan="Growth — $149/month">Start Growth</a>
+      </div>
+    </div>
+    <p class="note">Not sure which? Order a <b>$29 clip pack</b> or <b>$39 reels</b> first. If you don't love it, you don't pay.</p>
+  </div>
+</section>
+
+<section id="faq" style="padding-top: 20px;">
+  <div class="wrap">
+    <p class="chapter"><span>Ch. 06</span>Questions</p>
+    <h2>Before you <span class="serif">ask.</span></h2>
+    <div class="faq">
+      <details><summary>How fast is delivery?</summary><p>48 hours from when I have your link or files. Growth clients get priority.</p></details>
+      <details><summary>Are you a professional studio?</summary><p>No, and that's the point. I'm a solo creator who learned to direct AI tools well. No agency overhead means founders get lots of good content at a price that fits an early-stage budget.</p></details>
+      <details><summary>What do you need from me?</summary><p>Just your website or product link. For clips, a link to the long video. For reels, a topic or script (or I write it). I ask a few quick questions if anything's unclear.</p></details>
+      <details><summary>Do you use AI? Is it "AI slop"?</summary><p>Yes, I use AI, openly. It writes first drafts, voices, finds footage and speeds up the edit. That's why it's fast and cheap. But I'm the one telling the story: I pick every clip, fix the pacing and cut anything that looks off before you see it. If it feels like slop, you don't pay.</p></details>
+      <details><summary>Can I use my own voice or footage?</summary><p>Yes. Send a voice note or clips and I'll cut to them word by word. Otherwise I use a natural AI voice and licensed-style footage.</p></details>
+      <details><summary>What if I don't like it?</summary><p>You get one free revision on every video. If it's still not right on your first order, you don't pay.</p></details>
+      <details><summary>How do I pay?</summary><p>Pay after you've seen your first draft. For Growth, monthly by card or UPI/PayPal.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="order" style="padding-top: 40px;">
+  <div class="wrap order">
+    <div>
+      <p class="chapter"><span>Ch. 07</span>Hire me</p>
+      <h2>Your story, <span class="serif">in 48 hours.</span></h2>
+      <p class="sub">Tell me what you're building or what happened. I'll reply within a few hours with questions (if any) and a delivery time. <b>You pay after you see the draft.</b></p>
+      <p class="contact-alt">Prefer DM? Message me on <a data-x href="#">X</a> or email <a data-email href="#">me</a>.</p>
+    </div>
+    <form id="orderForm">
+      <div class="two">
+        <label>Your name<input name="name" required autocomplete="name"></label>
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+      </div>
+      <label>What do you want?
+        <select name="plan" id="planSelect">
+          <option>Launch film — $79</option>
+          <option>Story reels — $39</option>
+          <option>Clip pack — $29</option>
+          <option>Growth — $149/month</option>
+          <option>Not sure yet</option>
+        </select>
+      </label>
+      <label>Your website / product / video link<input name="link" placeholder="https://" required></label>
+      <label>The story (idea, script, deadline, a video you love)<textarea name="notes"></textarea></label>
+      <button class="btn btn-primary" type="submit">Send it →</button>
+      <p class="fine">Opens your email app with everything filled in. No payment now.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fin">Fin<span>.</span></div>
+    <div class="row">
+      <div><span data-brand>Hookframe</span> · AI-made content for founders who don't have time</div>
+      <div>© <span id="yr"></span></div>
+    </div>
+  </div>
+</footer>
+
+<a href="#order" class="btn btn-primary sticky-cta">Hire me — from $29 →</a>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <button class="x" aria-label="Close">×</button>
+  <video id="player" controls playsinline></video>
+</div>
+
+<script>
+  // ── Edit these before publishing ──────────────────────────────────────────
+  const CONFIG = {
+    brand: "Hookframe",
+    email: "hello@example.com",        // where orders go
+    x: "https://x.com/yourhandle",     // your X profile
+  };
+  // ──────────────────────────────────────────────────────────────────────────
+
+  document.querySelectorAll("[data-brand]").forEach(e => e.textContent = CONFIG.brand);
+  document.querySelectorAll("[data-email]").forEach(e => { e.href = "mailto:" + CONFIG.email; e.textContent = CONFIG.email; });
+  document.querySelectorAll("[data-x]").forEach(e => e.href = CONFIG.x);
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  // Autoplay muted previews only while on screen (saves data on phones).
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    const v = en.target;
+    if (en.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); } else v.pause();
+  }), { threshold: 0.35 });
+  document.querySelectorAll("video[data-auto]").forEach(v => io.observe(v));
+
+  // Tabs
+  document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t));
+    document.querySelectorAll("[data-panel]").forEach(p => p.hidden = p.dataset.panel !== t.dataset.tab);
+  }));
+
+  // Full player with sound
+  const modal = document.getElementById("modal"), player = document.getElementById("player");
+  const close = () => { player.pause(); player.removeAttribute("src"); player.load(); modal.classList.remove("open"); };
+  document.querySelectorAll(".work").forEach(w => w.addEventListener("click", () => {
+    caseVideo.pause();
+    player.src = w.dataset.src; modal.classList.add("open"); player.play().catch(() => {});
+  }));
+  modal.addEventListener("click", e => { if (e.target === modal || e.target.classList.contains("x")) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+
+  // Case study: beats seek the reel (with sound, since it's a click), active beat follows playback.
+  const caseVideo = document.getElementById("caseVideo"), caseSound = document.getElementById("caseSound");
+  const beats = [...document.querySelectorAll(".beat")];
+  beats.forEach(b => b.addEventListener("click", () => {
+    caseVideo.muted = false; caseVideo.loop = false;
+    caseVideo.currentTime = parseFloat(b.dataset.t);
+    caseVideo.play().catch(() => {});
+    caseSound.hidden = true;
+  }));
+  caseVideo.addEventListener("click", () => caseVideo.paused ? caseVideo.play() : caseVideo.pause());
+  caseVideo.addEventListener("timeupdate", () => {
+    const t = caseVideo.currentTime;
+    let on = beats[0];
+    beats.forEach(b => { if (parseFloat(b.dataset.t) <= t + 0.05) on = b; });
+    beats.forEach(b => b.classList.toggle("on", b === on));
+  });
+  new IntersectionObserver(([en]) => {
+    if (en.isIntersecting) { if (caseVideo.paused && caseVideo.muted) caseVideo.play().catch(() => {}); }
+    else caseVideo.pause();
+  }, { threshold: 0.3 }).observe(caseVideo);
+
+  // Plan buttons preselect the form
+  document.querySelectorAll("[data-plan]").forEach(b => b.addEventListener("click", () => {
+    document.getElementById("planSelect").value = b.dataset.plan;
+  }));
+
+  // Order form → prefilled email (no backend needed)
+  document.getElementById("orderForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const body = `Name: ${f.get("name")}\nEmail: ${f.get("email")}\nPlan: ${f.get("plan")}\nLink: ${f.get("link")}\n\n${f.get("notes") || ""}`;
+    location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("Video order: " + f.get("plan"))}&body=${encodeURIComponent(body)}`;
+  });
+</script>
+</body>
+</html>
